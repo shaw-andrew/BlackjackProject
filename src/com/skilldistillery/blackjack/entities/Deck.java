@@ -20,6 +20,8 @@ public class Deck {
 		}
 		return deck;
 	}
+	
+	
 
 	public int checkDeckSize() {
 		return cardDeck.size();
@@ -27,6 +29,10 @@ public class Deck {
 
 	public Card dealCard() {
 		return cardDeck.remove(0);
+	}
+	
+	public void dealCard(Hand hand) {
+		hand.addCard(cardDeck.remove(0));
 	}
 	
 	public void shuffle() {

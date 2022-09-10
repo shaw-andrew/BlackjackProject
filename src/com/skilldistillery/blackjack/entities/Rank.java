@@ -1,8 +1,8 @@
 package com.skilldistillery.blackjack.entities;
 
 public enum Rank {
-	TWO(1), THREE(2), FOUR(3), FIVE(4), SIX(5), SEVEN(6), 
-	EIGHT(7), NINE(8), TEN(9), JACK(10), QUEEN(10), KING(10), 
+	TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), 
+	EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10), 
 	ACE(11);
 
 	private int value;
