@@ -8,14 +8,19 @@ public class BlackjackHand extends Hand {
 		for (Card card : hand) {
 			handValue += card.getValue();
 		}
+		if (handValue > 21) {
+			for (Card card : hand) {
+				if (card.getRank() == Rank.ACE) {
+					handValue -= 10;
+//					System.out.println("Time for that soft ace, baby.");
+				}
+			}
+		}
 		return handValue;
 	}
 
 	public boolean isBlackjack() {
 		if (getHandValue() == 21) {
-			System.out.println();
-			System.out.println("BLACKJACK!");
-			System.out.println();
 			return true;
 		} else {
 			return false;
@@ -24,9 +29,6 @@ public class BlackjackHand extends Hand {
 
 	public boolean isBust() {
 		if (getHandValue() > 21) {
-			System.out.println();
-			System.out.println("Busted.");
-			System.out.println();
 			return true;
 		} else {
 			return false;

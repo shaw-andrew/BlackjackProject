@@ -19,33 +19,31 @@ public class BlackjackApp {
 	}
 
 	public void launch() {
-		gameStart();
 		while (true) {
+			gameStart();
 			playerDecision();
 			dealerRunnout();
-			playAgain();
 		}
 	}
 
 	public void gameStart() {
-		System.out.println("Welcome to Java Blackjack. Would you like to play a game?");
+		System.out.println("Back for more Java Blackjack? Please type play to begin a round or quit to exit.");
 		String userInput = kb.nextLine();
 		while (true) {
 			switch (userInput.toLowerCase()) {
 
-			case ("yes"):
+			case ("play"):
+				player.getPlayersHand().clear();
+				dealer.getPlayersHand().clear();
 				dealer.dealFirstRound(player);
-				blackjackOrBust(player);
-				blackjackOrBust(dealer);
-
 				break;
 
-			case ("no"):
+			case ("quit"):
 				System.out.println("Have a nice day.");
 				System.exit(1);
 
 			default:
-				System.out.println("Please enter yes or no. Would you like to play a game?");
+				System.out.println("Please enter play or quit. Would you like to play a game?");
 				userInput = kb.nextLine();
 			}
 			break;
@@ -53,76 +51,82 @@ public class BlackjackApp {
 	}
 
 	public void playerDecision() {
-		System.out.println("Please press 1 to hit or 2 to stand.");
-		System.out.println();
-		int userInput = kb.nextInt();
+		if (player.blackjackOrBust()) {
+			return;
+		}
+		
+		System.out.println("Please type hit to hit or stay to stay.");
+		String userInput = kb.nextLine();
 		boolean hitOrStay = true;
+		if (player.blackjackOrBust()) {
+			hitOrStay = false;
+		}
 		while (hitOrStay) {
-			switch (userInput) {
+			switch (userInput.toLowerCase()) {
 
-			case (1):
+			case ("hit"):
 				dealer.dealCard(player);
-				System.out.println("Your had now has a value of: " + player.getHandValue());
-				blackjackOrBust(player);
-				System.out.println("Please press 1 to hit or 2 to stand.");
-				kb.nextLine();
-				userInput = kb.nextInt();
-				break;
+				System.out.println("Your hand now has a value of: " + player.getHandValue());
+				System.out.println();
+				if (player.blackjackOrBust()) {
+					hitOrStay = false;
+					break;
+				}
+				System.out.println("Please type hit to hit or stay to stay.");
+				userInput = kb.nextLine();
+				continue;
 
-			case (2):
+			case ("stay"):
 				hitOrStay = false;
 				System.out.println("You chose to stand.");
 				System.out.println();
 				break;
 
 			default:
-				System.out.println("Invalid seleciton, please press 1 to hit or 2 to stand.");
-				userInput = kb.nextInt();
+				System.out.println("Invalid selection, Please type hit to hit or stay to stay.");
+				userInput = kb.nextLine();
 			}
-			 break;
+			break;
 		}
 	}
 
 	public void dealerRunnout() {
-		boolean hitOrStay = true;
-		while (hitOrStay)
+		boolean hitOrStay = !dealer.blackjackOrBust();
+		while (hitOrStay) {
 			if (dealer.getHandValue() < 17) {
+				System.out.println("Dealer hand is less than 17. Dealer hits.");
 				dealer.dealCard(dealer);
-				blackjackOrBust(dealer);
+				hitOrStay = !dealer.blackjackOrBust();
+			} else if (dealer.getHandValue() == player.getHandValue()) {
+				System.out.println("You tied the dealer! You get your money back!");
+				System.out.println();
+				hitOrStay = false;
+			} else if (dealer.getHandValue() < 21) {
+				System.out.println("Dealer stays. Dealer hand has a value of " + dealer.getHandValue());
+				hitOrStay = false;
+			} else if (dealer.getHandValue() > 21) {
+				hitOrStay = false;
+			} else if (dealer.getHandValue() == 21) {
+				System.out.println("Dealer has blackjack. You lose.");
+				hitOrStay = false;
 			}
-		if (dealer.getHandValue() < 21) {
-			System.out.println("Dealer stays.");
 		}
-
+		winLossLogic();
 	}
 
-	public void playAgain() {
-		System.out.println("Would you like to play again?");
-		kb.nextLine();
-		String userInput = kb.nextLine();
-		
-		switch (userInput.toLowerCase()) {
-		case ("yes"):
-//			player.hand.clear();
-//			dealer.hand.clear();
-			dealer.dealFirstRound(player);
-			kb.nextLine();
-			break;
-		case ("no"):
-			System.out.println("Thanks for playing. Goodbye.");
-			System.exit(1);
-		default:
-			System.out.println("Please enter yes or no. Would you like to play again?");
-			userInput = kb.nextLine();
-		}
-	}
-
-	public void blackjackOrBust(Player player) {
-		if (player.getPlayersHand().isBust() || player.getPlayersHand().isBlackjack()) {
-			System.out.println("Game over.");
+	public void winLossLogic() {
+		if (player.getHandValue() > 21) {
+			System.out.println("You lose.");
 			System.out.println();
-			playAgain();
-
+		} else if (dealer.getHandValue() > 21) {
+			System.out.println("You win.");
+			System.out.println();
+		} else if (dealer.getHandValue() > player.getHandValue()) {
+			System.out.println("Dealer wins!");
+			System.out.println();
+//		} else {
+//			System.out.println("You win!");
+//			System.out.println();
 		}
 	}
 }

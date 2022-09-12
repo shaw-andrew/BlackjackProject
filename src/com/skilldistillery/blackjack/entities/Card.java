@@ -5,8 +5,8 @@ import java.util.Objects;
 public class Card {
 	private Suit suit;
 	private Rank rank;
-	
-	Card (Suit suit, Rank rank){
+
+	Card(Suit suit, Rank rank) {
 		this.suit = suit;
 		this.rank = rank;
 	}
@@ -14,10 +14,11 @@ public class Card {
 	public Rank getRank() {
 		return rank;
 	}
+
 	public int getValue() {
 		return rank.getValue();
 	}
-	
+
 	public Suit getSuit() {
 		return suit;
 	}
@@ -26,7 +27,7 @@ public class Card {
 	public int hashCode() {
 		return Objects.hash(rank, suit);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

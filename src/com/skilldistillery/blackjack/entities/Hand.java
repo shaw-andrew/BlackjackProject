@@ -5,18 +5,16 @@ import java.util.List;
 
 public abstract class Hand {
 	protected List<Card> hand = new ArrayList<>();
-	
+
 	public void addCard(Card card) {
 		hand.add(card);
 	}
-	
+
 	public void clear() {
-		hand.removeAll(hand);
+		hand.clear();
 	}
-	
+
 	public abstract int getHandValue();
-	
-	
 
 	public List<Card> getHand() {
 		return hand;
@@ -27,6 +25,4 @@ public abstract class Hand {
 		return "This hand has a value of " + getHandValue();
 	}
 
-	
-	
 }

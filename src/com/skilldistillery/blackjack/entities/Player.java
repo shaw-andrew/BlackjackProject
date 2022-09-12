@@ -12,20 +12,27 @@ public class Player {
 		return playersHand.getHandValue();
 	}
 
-//	public void getLastCard() {
-//		List<Card> hand = playersHand.getHand();
-//		Card lastCard = playersHand.getHand().get(hand.size() - 1);
-//		System.out.println(lastCard);
-//	}
-
 	public void addCard(Card dealtCard) {
 		playersHand.addCard(dealtCard);
 	}
-	
+
+	public boolean blackjackOrBust() {
+		if (playersHand.isBust()) {
+			System.out.println(this + " BUSTED with a hand value of " + this.getHandValue());
+			System.out.println();
+		}
+
+		else if (playersHand.isBlackjack()) {
+			System.out.println(this + " got BLACKJACK!");
+			System.out.println();
+		}
+
+		return (playersHand.isBust() || playersHand.isBlackjack());
+	}
+
 	@Override
 	public String toString() {
 		return "User";
 	}
-	
 
 }

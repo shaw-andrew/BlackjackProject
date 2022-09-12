@@ -10,10 +10,10 @@ public class Dealer extends Player {
 	public Card dealCard(Player player) {
 		Card card = deck.dealCard();
 		player.addCard(card);
-		System.out.println(player + " was dealt a " + card+".");
+		System.out.println(player + " was dealt a " + card + ".");
 		return card;
 	}
-	
+
 	public Card dealCardFaceDown(Player player) {
 		Card card = deck.dealCard();
 		player.addCard(card);
@@ -23,8 +23,8 @@ public class Dealer extends Player {
 
 	public void dealFirstRound(Player player) {
 		shuffle();
+		System.out.println("Dealer grabs a freshly shuffled deck and begins to deal.");
 		Card card = dealCard(player);
-		System.out.println();
 		card = dealCardFaceDown(this);
 		card = dealCard(player);
 		card = dealCard(this);
@@ -33,7 +33,7 @@ public class Dealer extends Player {
 				+ " showing for the dealer.");
 		System.out.println();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Dealer";
